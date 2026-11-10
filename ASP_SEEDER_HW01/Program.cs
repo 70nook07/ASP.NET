@@ -6,6 +6,163 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
+string styles = """
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            color: #252a34;
+        }
+
+        header {
+            background: #202938;
+            color: white;
+            padding: 20px 8%;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #707784;
+            margin-bottom: 30px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 22px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 3px 12px #00000010;
+            transition: transform 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 16px;
+        }
+
+        .category {
+            color: #777f8c;
+            font-size: 13px;
+        }
+
+        .price {
+            color: #247a55;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 12px 0;
+        }
+
+        .button {
+            display: inline-block;
+            background: #356ae6;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+
+        .button:hover {
+            background: #2453c5;
+        }
+
+        .details-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            box-shadow: 0 3px 12px #00000010;
+        }
+
+        .details-card img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .details-info {
+            align-self: center;
+        }
+
+        .description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 650px) {
+            .details-card {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    """;
+
+
+// Random generated images
+string GetImageUrl(string name, string category, int id)
+{
+    return $"https://picsum.photos/seed/product{id}/640/420";
+}
+
+string Page(string content)
+{
+    return $"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>My Online Shop</title>
+            {styles}
+        </head>
+        <body>
+            <header>
+                <a href="/">My Online Shop</a>
+            </header>
+            <main>
+                {content}
+            </main>
+        </body>
+        </html>
+        """;
+}
+
+
 string connectionString = "Data Source=shop.db";
 
 // Database init + seed data
@@ -94,6 +251,7 @@ using (var connection = new SqliteConnection(connectionString))
 }
 
 // Homepage
+
 app.MapGet("/", () =>
 {
     using var connection = new SqliteConnection(connectionString);
@@ -113,11 +271,9 @@ app.MapGet("/", () =>
 
     var html = new StringBuilder();
 
-    html.Append("<h1>My Online Shop</h1>");
-    html.Append("<h2>Our Products</h2>");
-    html.Append("<p>Browse our collection of 50 products.</p>");
-    html.Append("<table border='1' cellpadding='10'>");
-    html.Append("<tr><th>Name</th><th>Category</th><th>Price</th><th></th></tr>");
+    html.Append("<h1>Our Products</h1>");
+    html.Append("<p class='subtitle'>Discover our collection of quality products.</p>");
+    html.Append("<div class='product-grid'>");
 
     while (reader.Read())
     {
@@ -126,20 +282,33 @@ app.MapGet("/", () =>
         double price = reader.GetDouble(2);
         string category = WebUtility.HtmlEncode(reader.GetString(3));
 
-        html.Append("<tr>");
-        html.Append($"<td>{name}</td>");
-        html.Append($"<td>{category}</td>");
-        html.Append($"<td>${price:F2}</td>");
-        html.Append($"<td><a href='/products/{id}'>Details</a></td>");
-        html.Append("</tr>");
+        string image = GetImageUrl(name, category, id);
+
+        html.Append("<div class='product-card'>");
+
+        html.Append($"""
+                     <img src="{image}" alt="{name}" loading="lazy">
+                     """);
+
+        html.Append("<div class='product-info'>");
+
+        html.Append($"<div class='category'>{category}</div>");
+        html.Append($"<h3>{name}</h3>");
+        html.Append($"<div class='price'>${price:F2}</div>");
+        html.Append($"<a class='button' href='/products/{id}'>View Details</a>");
+
+        html.Append("</div>");
+        html.Append("</div>");
     }
 
-    html.Append("</table>");
+    html.Append("</div>");
 
-    return Results.Content(html.ToString(), "text/html");
+    return Results.Content(Page(html.ToString()), "text/html");
 });
 
+
 // Product details
+
 app.MapGet("/products/{id:int}", (int id) =>
 {
     using var connection = new SqliteConnection(connectionString);
@@ -167,17 +336,31 @@ app.MapGet("/products/{id:int}", (int id) =>
     double price = reader.GetDouble(3);
     string category = WebUtility.HtmlEncode(reader.GetString(4));
 
+    string image = GetImageUrl(name, category, id);
+
     var html = new StringBuilder();
 
     html.Append("<h1>Product Details</h1>");
-    html.Append($"<h2>{name}</h2>");
-    html.Append($"<p>Product ID: {id}</p>");
-    html.Append($"<p>Category: {category}</p>");
-    html.Append($"<p>Description: {description}</p>");
-    html.Append($"<h3>Price: ${price:F2}</h3>");
-    html.Append("<a href='/'>Back to homepage</a>");
+    html.Append("<p class='subtitle'>Learn more about this product.</p>");
 
-    return Results.Content(html.ToString(), "text/html");
+    html.Append("<div class='details-card'>");
+
+    html.Append($"""
+                 <img src="{image}" alt="{name}">
+                 """);
+
+    html.Append("<div class='details-info'>");
+
+    html.Append($"<div class='category'>{category}</div>");
+    html.Append($"<h2>{name}</h2>");
+    html.Append($"<p class='description'>{description}</p>");
+    html.Append($"<div class='price'>${price:F2}</div>");
+    html.Append("<a class='button' href='/'>Back to Products</a>");
+
+    html.Append("</div>");
+    html.Append("</div>");
+
+    return Results.Content(Page(html.ToString()), "text/html");
 });
 
 app.Run();
