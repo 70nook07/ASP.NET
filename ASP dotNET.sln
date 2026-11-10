@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASP_SEEDER_HW01", "ASP_SEEDER_HW01\ASP_SEEDER_HW01.csproj", "{60767677-A953-42B1-8302-F126F558E855}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{60767677-A953-42B1-8302-F126F558E855}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60767677-A953-42B1-8302-F126F558E855}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60767677-A953-42B1-8302-F126F558E855}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60767677-A953-42B1-8302-F126F558E855}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
