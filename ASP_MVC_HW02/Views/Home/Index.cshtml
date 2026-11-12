@@ -1,0 +1,25 @@
+@model List<Product>
+@{
+    ViewData["Title"] = "Our Products";
+}
+
+<h1>Our Products</h1>
+<p class="subtitle">Discover our collection.</p>
+
+<div class="product-grid">
+    @foreach (var p in Model)
+    {
+        <div class="card">
+            <img src="@p.ImagePath" alt="@p.Name">
+            <div class="info">
+                <div class="cat">@p.Category.Name</div>
+                <h3>@p.Name</h3>
+                <div class="price">@p.Price.ToString("C2")</div>
+                <a class="btn" asp-action="Details" asp-route-id="@p.Id">View</a>
+            </div>
+        </div>
+    }
+</div>
+
+<br>
+<a class="btn" asp-action="Create">Add Product</a>

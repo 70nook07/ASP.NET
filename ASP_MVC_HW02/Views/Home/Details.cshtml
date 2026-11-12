@@ -1,0 +1,21 @@
+@model Product
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<h1>Product Details</h1>
+<p class="subtitle">Learn more.</p>
+
+<div class="details">
+    <img src="@Model.ImagePath" alt="@Model.Name">
+    <div class="side">
+        <div class="cat">@Model.Category.Name</div>
+        <h2>@Model.Name</h2>
+        <p class="desc">@Model.Description</p>
+        <div class="price">@Model.Price.ToString("C2")</div>
+        <div class="actions">
+            <a class="btn" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+            <a class="btn btn-danger" asp-action="DeleteConfirmation" asp-route-id="@Model.Id">Delete</a>
+        </div>
+    </div>
+</div>

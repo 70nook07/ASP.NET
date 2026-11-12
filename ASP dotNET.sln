@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASP_SEEDER_HW01", "ASP_SEEDER_HW01\ASP_SEEDER_HW01.csproj", "{60767677-A953-42B1-8302-F126F558E855}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASP_MVC_HW02", "ASP_MVC_HW02\ASP_MVC_HW02.csproj", "{EE4342A0-B7F6-45ED-BC27-C0D961C8EAC6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{60767677-A953-42B1-8302-F126F558E855}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60767677-A953-42B1-8302-F126F558E855}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60767677-A953-42B1-8302-F126F558E855}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE4342A0-B7F6-45ED-BC27-C0D961C8EAC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE4342A0-B7F6-45ED-BC27-C0D961C8EAC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE4342A0-B7F6-45ED-BC27-C0D961C8EAC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE4342A0-B7F6-45ED-BC27-C0D961C8EAC6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

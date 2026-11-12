@@ -1,0 +1,38 @@
+body { margin: 0; font-family: Arial, sans-serif; background: #f4f6f9; color: #252a34; }
+header { background: #202938; padding: 20px 8%; }
+header a { color: white; text-decoration: none; font-size: 24px; font-weight: bold; }
+main { max-width: 1200px; margin: 35px auto; padding: 0 20px; }
+
+/* Product list */
+.product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 22px; }
+.card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 3px 12px #00000010; transition: transform .2s; }
+.card:hover { transform: translateY(-5px); }
+.card img { width: 100%; height: 180px; object-fit: cover; }
+.info { padding: 16px; }
+.cat { color: #777f8c; font-size: 14px; margin-bottom: 5px; }
+h3 { font-size: 18px; margin-bottom: 5px; }
+.price { color: #247a55; font-size: 20px; font-weight: bold; margin: 12px 0; }
+
+/* Buttons */
+.btn { display: inline-block; background: #356ae6; color: white; padding: 10px 16px; border: 0; border-radius: 6px;
+       font: inherit; text-decoration: none; cursor: pointer; }
+.btn:hover { background: #2453c5; }
+.btn-danger { background: #d64545; }
+.btn-danger:hover { background: #b73030; }
+
+/* Details + delete confirmation */
+.details { background: white; border-radius: 12px; padding: 25px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px;
+           box-shadow: 0 3px 12px #00000010; }
+.details img { width: 100%; border-radius: 10px; }
+.side { align-self: center; }
+.desc { color: #666; line-height: 1.6; margin-bottom: 15px; }
+.actions { display: flex; gap: 10px; margin-top: 20px; }
+
+/* Add / edit form */
+.form { margin-top: 20px; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 3px 12px #00000010; }
+.form label { display: block; margin-bottom: 5px; font-weight: bold; }
+.form input, .form textarea, .form select { width: 100%; padding: 8px; margin-bottom: 14px; border: 1px solid #ccc;
+                                            border-radius: 4px; box-sizing: border-box; }
+.hint { color: #777f8c; font-size: .9em; margin-bottom: 5px; }
+.error { color: red; font-size: .9em; margin-bottom: 12px; }
+.validation-summary-valid { display: none; }

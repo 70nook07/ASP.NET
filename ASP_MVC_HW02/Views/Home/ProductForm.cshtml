@@ -1,0 +1,33 @@
+@* One form for both Add (Model.Id == 0) and Edit *@
+@model ProductViewModel
+@{
+    var isNew = Model.Id == 0;
+    ViewData["Title"] = isNew ? "Add Product" : "Edit Product";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form method="post" enctype="multipart/form-data" class="form">
+    <div asp-validation-summary="All" class="error"></div>
+
+    <label asp-for="Name"></label>
+    <input asp-for="Name">
+
+    <label asp-for="Description"></label>
+    <textarea asp-for="Description" rows="4"></textarea>
+
+    <label asp-for="Price"></label>
+    <input asp-for="Price" type="number" step="0.01">
+
+    <label asp-for="CategoryId">Category</label>
+    <select asp-for="CategoryId" asp-items="(SelectList)ViewBag.Categories"></select>
+
+    <label asp-for="Image">Image</label>
+    @if (!isNew)
+    {
+        <div class="hint">Leave empty to keep the current image.</div>
+    }
+    <input asp-for="Image" type="file" accept="image/*">
+
+    <button type="submit" class="btn">Save</button>
+</form>
